@@ -1,0 +1,10 @@
+[Registro No Encontrado.  AUART='ZCCA', Registro No Encontrado.  AUART='ZCCA', Registro No Encontrado.  AUART='ZCVA', Registro No Encontrado.  AUART='ZCVA', Registro No Encontrado.  AUART='ZCVA', Registro No Encontrado.  AUART='ZCVA', 
+ Datos API Contrato Obtenidos Request. 6
+,  Datos API Contrato Validados Origen SAP / AS400.0, 
+Datos API Contrato Fallidos Origen SAP / AS400.6, 
+ Datos  API Contrato Validados Destino SDI. 0, 
+ Datos  API Contrato Fallidos Destino SDI. 6
+, Validacion de Data API Contrato Fallida, 
+
+]
+

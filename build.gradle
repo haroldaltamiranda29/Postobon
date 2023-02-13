@@ -1,0 +1,106 @@
+group 'co.com.sistecredito.qa.proyectobase'
+version '1.0'
+
+repositories {
+    jcenter()
+    mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+         classpath("net.serenity-bdd:serenity-gradle-plugin:2.1.6")
+        classpath("net.serenity-bdd:serenity-single-page-report:2.1.4")
+    }
+}
+
+
+ext{
+    serenityVersion = '2.0.90'
+    serenityCucumberVersion = '1.9.5'
+}
+
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'net.serenity-bdd.aggregator'
+apply plugin: 'java-library'
+apply plugin: 'jacoco'
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+
+test {
+//    useJUnitPlatform()
+
+	    //Sigue ejecutando aunque falle un caso
+		gradle.startParameter.continueOnFailure = true
+
+	    testLogging.showStandardStreams = true
+	    systemProperties System.getProperties()
+	    //Habilitar Ejecuciones Paralelas
+	   //maxParallelForks = Runtime.runtime.availableProcessors() 		   
+
+ }
+
+tasks.withType (JavaCompile) {
+  compileJava.options.encoding = 'UTF-8'
+  compileTestJava.options.encoding = 'UTF-8' 
+}
+
+
+
+dependencies {
+    ///////////////////////////////////////////////////////////////////////////
+/////////LOCAL DEPENDENCIES///////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+    compile name: 'ojdbc6'
+    //Se Copia copie dll a C:\Windows\System32
+    compile name: 'sapjco3'
+
+    testCompile 'net.serenity-bdd:serenity-core:2.1.6'
+    testCompile 'net.serenity-bdd:serenity-junit:2.1.6'
+    testCompile('junit:junit:4.12')
+    testCompile('org.assertj:assertj-core:3.9.1')
+    testCompile('org.slf4j:slf4j-simple:1.7.7')
+    testCompile group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
+    compile group: 'net.serenity-bdd', name: 'serenity-screenplay-rest', version: '2.1.6'
+    compile group: 'com.jcraft', name: 'jsch', version: '0.1.44-1'
+    compile group: 'org.apache.poi', name: 'poi', version: '4.0.1'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.1'
+    compile group: 'net.serenity-bdd', name: 'serenity-core', version: '2.1.6'
+    compile group: 'net.serenity-bdd', name: 'serenity-junit', version: '2.1.6'
+    compile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: '1.9.51'
+    compile group: 'net.serenity-bdd', name: 'serenity-screenplay', version: '2.1.6'
+    compile group: 'net.serenity-bdd', name: 'serenity-screenplay-webdriver', version: '2.1.6'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    implementation group: 'net.serenity-bdd', name: 'serenity-ensure', version: '2.0.49'
+    implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
+	implementation group: 'javax.mail', name: 'javax.mail-api', version: '1.6.0'
+	implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.0'
+    compile group: 'net.sf.jt400', name: 'jt400', version: '6.6'
+
+	//Dependencia conexion MongoDB
+	//https://mongodb.github.io/mongo-java-driver/4.2/driver-reactive/getting-started/installation/
+	 compile 'org.mongodb:mongodb-driver-reactivestreams:4.2.3'
+
+    compile group: 'org.json', name: 'json', version: '20180813'
+    compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.2.0'
+
+}
+    
+
+task copyDeps(type: Copy) {
+    from configurations.runtime
+    into project.projectDir.path+"/lib"
+}
